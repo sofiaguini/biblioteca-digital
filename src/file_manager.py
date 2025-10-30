@@ -1,11 +1,12 @@
 import os
 from collections import defaultdict
 from datetime import datetime
+import re
 
 def listar_documentos_por_tipo_e_ano(diretorio='data'):
     """
     Lista todos os documentos digitais no diretório, organizados por tipo de arquivo e ano de publicação.
-    Assume que o ano está no nome do arquivo (ex: 'artigo_2023.pdf').
+    Tenta extrair um ano de 4 dígitos (ex: 2023) do nome do arquivo.
     Retorna um dicionário: {tipo: {ano: [lista_arquivos]}}
     """
     documentos = defaultdict(lambda: defaultdict(list))
@@ -20,13 +21,13 @@ def listar_documentos_por_tipo_e_ano(diretorio='data'):
             _, extensao = os.path.splitext(arquivo)
             tipo = extensao.lower().lstrip('.')  # ex: 'pdf'
             
-            # Extrair ano do nome (assume formato como 'nome_YYYY.ext')
+           # --- TRECHO DE EXTRAÇÃO DE ANO REVISADO (Mais Simples) ---
             ano = None
-            partes = arquivo.split('_')
-            for parte in partes:
-                if len(parte) == 4 and parte.isdigit():
-                    ano = parte
-                    break
+            # Procura a primeira ocorrência de 4 dígitos (ex: 2023) no nome do arquivo
+            match = re.search(r'(\d{4})', arquivo)
+            if match and 1900 <= int(match.group(0)) <= 2099: # Verifica se está no intervalo razoável de anos
+                ano = match.group(0)
+            # ------------------------------------------
             
             if ano:
                 documentos[tipo][ano].append(arquivo)
