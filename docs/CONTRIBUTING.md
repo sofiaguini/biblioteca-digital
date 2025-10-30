@@ -10,3 +10,5 @@ Obrigado por considerar contribuir com o projeto! Este guia ajuda a manter o có
   ```bash
   git clone https://github.com/SEU_USUARIO/biblioteca-digital.git
   cd biblioteca-digital
+  ---
+*Licença MIT – Contribuições bem-vindas!*
