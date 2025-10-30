@@ -1,7 +1,12 @@
 import os
 import sys
-from src.file_manager import listar_documentos_por_tipo_e_ano, exibir_listagem
-# As funções de CRUD (adicionar, remover, renomear) serão adicionadas no próximo sub-passo
+from src.file_manager import (
+    listar_documentos_por_tipo_e_ano, 
+    exibir_listagem,
+    adicionar_documento,
+    renomear_documento,
+    remover_documento
+)
 
 def menu_principal():
     """Exibe o menu principal e processa a escolha do usuário."""
@@ -10,27 +15,50 @@ def menu_principal():
         print("BIBLIOTECA DIGITAL - MENU")
         print("="*30)
         print("1. Listar Documentos")
-        print("2. Adicionar Novo Documento (Ainda não implementado)")
-        print("3. Renomear Documento (Ainda não implementado)")
-        print("4. Remover Documento (Ainda não implementado)")
+        print("2. Adicionar Novo Documento")
+        print("3. Renomear Documento")
+        print("4. Remover Documento")
         print("5. Sair")
         print("="*30)
 
         escolha = input("Escolha uma opção (1-5): ").strip()
 
         if escolha == '1':
-            # Chama a função de listagem
             documentos = listar_documentos_por_tipo_e_ano()
             exibir_listagem(documentos)
+            
+            # PAUSA CORRIGIDA PARA VISUALIZAÇÃO
+            input("\nPressione Enter para retornar ao menu...") 
+            
         elif escolha == '2':
-            print("\n>> Funcionalidade de Adicionar será implementada no próximo passo.")
+            nome_arquivo = input("Nome do novo documento (ex: tese_2025.pdf): ").strip()
+            if nome_arquivo:
+                sucesso, mensagem = adicionar_documento(nome_arquivo)
+                print(f"\n>> {mensagem}")
+            else:
+                print("\n>> Nome do arquivo não pode ser vazio.")
+            
         elif escolha == '3':
-            print("\n>> Funcionalidade de Renomear será implementada no próximo passo.")
+            nome_antigo = input("Nome atual do documento a renomear: ").strip()
+            nome_novo = input("Novo nome do documento (incluindo extensão): ").strip()
+            if nome_antigo and nome_novo:
+                sucesso, mensagem = renomear_documento(nome_antigo, nome_novo)
+                print(f"\n>> {mensagem}")
+            else:
+                print("\n>> Nomes de arquivos não podem ser vazios.")
+            
         elif escolha == '4':
-            print("\n>> Funcionalidade de Remover será implementada no próximo passo.")
+            nome_arquivo = input("Nome do documento a remover: ").strip()
+            if nome_arquivo:
+                sucesso, mensagem = remover_documento(nome_arquivo)
+                print(f"\n>> {mensagem}")
+            else:
+                print("\n>> Nome do arquivo não pode ser vazio.")
+            
         elif escolha == '5':
             print("\nObrigado por usar a Biblioteca Digital. Até mais!")
             sys.exit(0)
+            
         else:
             print("\nOpção inválida. Por favor, escolha um número de 1 a 5.")
 
