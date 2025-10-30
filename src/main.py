@@ -1,6 +1,8 @@
-import os
 import sys
-from src.file_manager import (
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # Corrige o path para src/
+
+from file_manager import (
     listar_documentos_por_tipo_e_ano, 
     exibir_listagem,
     adicionar_documento,
