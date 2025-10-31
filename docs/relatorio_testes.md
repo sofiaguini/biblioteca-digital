@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/7tG2jKp.png" alt="PUCPR 4D" width="100%"/>
+
 
 ---
 
